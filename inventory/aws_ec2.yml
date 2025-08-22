@@ -4,15 +4,16 @@ regions:
 keyed_groups:
   - key: tags.OS    # Group by OS tag
 hostnames:
-  - public_ip_address
+  - name: private_ip_address
+    separator: '_'
+    prefix: 'tag:Name' 
 filters:
   instance-state-name: running
 compose:
-  ansible_host: public_ip_address
+  ansible_host: private_ip_address
   ansible_user: |
     (
-      'ec2-user' if tags.get('OS') == 'amazon-linux' else
-      'cloud-user' if tags.get('OS') == 'rhel' else
+      'ec2-user' if tags.get('OS') == 'amazon-linux' or 'rhel' else
       'ubuntu'
     )
   ansible_ssh_private_key_file: ~/ansible-rsa-keypair.pem
