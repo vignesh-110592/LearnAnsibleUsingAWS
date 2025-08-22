@@ -4,13 +4,13 @@ regions:
 keyed_groups:
   - key: tags.OS    # Group by OS tag
 hostnames:
-  - name: private_ip_address
+  - name: 'private-ip-address'
     separator: '_'
     prefix: 'tag:Name' 
 filters:
   instance-state-name: running
 compose:
-  ansible_host: private_ip_address
+  ansible_host: 'private-ip-address'
   ansible_user: |
     (
       'ec2-user' if tags.get('OS') == 'amazon-linux' or 'rhel' else
