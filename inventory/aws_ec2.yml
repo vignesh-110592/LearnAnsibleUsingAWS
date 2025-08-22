@@ -2,15 +2,17 @@ plugin: amazon.aws.aws_ec2
 regions:
   - eu-north-1
 keyed_groups:
-  - key: tags.OS          # optional: group by OS tag
-  - key: tags.Environment # optional: group by Environment tag
+  - key: tags.OS    # Group by OS tag
 hostnames:
-  - public_dns_name
+  - public_ip_address
 filters:
   instance-state-name: running
 compose:
-  ansible_host: public_dns_name
+  ansible_host: public_ip_address
   ansible_user: |
-    'ec2-user' if tags.get('OS') == 'amazon-linux' else
-    'ec2-user' if tags.get('OS') == 'rhel' else
-    'ubuntu'
+    (
+      'ec2-user' if tags.get('OS') == 'amazon-linux' else
+      'cloud-user' if tags.get('OS') == 'rhel' else
+      'ubuntu'
+    )
+  ansible_ssh_private_key_file: ~/ansible-rsa-keypair.pem
