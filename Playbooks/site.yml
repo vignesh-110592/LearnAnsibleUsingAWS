@@ -17,6 +17,7 @@
       when: ansible_distribution in ["RedHat", "Amazon"]
 
 - hosts: web
+  gather_facts: true
   become: true
   tasks:
     
@@ -33,6 +34,33 @@
         name: httpd
         state: started
         enabled: yes
+
+    - name: Deploy test HTML page
+      copy:
+        dest: /var/www/html/index.html
+        content: "<h1>Apache is working on {{ inventory_hostname }}</h1>"
+        owner: apache
+        group: apache
+        mode: '0644'
+  
+    - name: Deploy test PHP page
+      copy:
+        dest: /var/www/html/info.php
+        content: "<?php phpinfo(); ?>"
+        owner: apache
+        group: apache
+        mode: '0644'
+  
+    - name: Verify Apache is running via HTTP
+      uri:
+        url: "http://{{ ansible_host }}/"
+        return_content: yes
+      register: apache_check
+
+    - name: Show verification output
+      debug:
+        msg: "{{ apache_check.content | truncate(100) }}"
+
 
 - hosts: db
   become: true
