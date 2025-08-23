@@ -1,0 +1,30 @@
+---
+
+- hosts: all
+  become: true
+  pre_tasks:
+
+    - name: Install updates Ubuntu
+      apt:
+        upgrade: dist
+        update_cache: true
+      when: ansible_distribution == "Ubuntu"
+
+    - name: Install updates Redhat and amazon linux
+      dnf:
+        update_only: true
+        update_cache: true
+      when: ansible_distribution in ["RedHat", "Amazon"]
+
+- hosts: web
+  become: true
+  tasks:
+    
+    - name: Install apache and PHP in web server (RHEL)
+      dnf:
+        name: 
+          - httpd
+          - php
+        state: latest
+      when: ansible_distribution == "RedHat"
+
