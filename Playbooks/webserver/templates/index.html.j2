@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vignesh Sundaramahalingam - Portfolio</title>
+    <style>
+        /* Reset and base styles */
+        * { margin:0; padding:0; box-sizing:border-box; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; line-height:1.6; background:#f4f4f4; color:#333; }
+
+        /* Header */
+        header { background:#4CAF50; color:#fff; text-align:center; padding:50px 20px; }
+        header img { width:150px; height:150px; border-radius:50%; border:4px solid #fff; margin-bottom:20px; }
+        header h1 { font-size:2.5rem; margin-bottom:10px; }
+        header p { font-size:1.2rem; }
+
+        nav { text-align:center; margin-top:20px; }
+        nav a { color:#fff; text-decoration:none; margin:0 15px; font-weight:bold; }
+        nav a:hover { text-decoration:underline; }
+
+        /* Sections */
+        section { max-width:1000px; margin:50px auto; padding:20px; background:#fff; border-radius:10px; box-shadow:0 4px 8px rgba(0,0,0,0.1); }
+        section h2 { text-align:center; color:#4CAF50; margin-bottom:30px; }
+
+        /* Education & Experience */
+        .timeline { margin:20px 0; }
+        .timeline-item { margin-bottom:20px; }
+        .timeline-item h3 { margin-bottom:5px; color:#333; }
+        .timeline-item span { font-size:0.9rem; color:#777; }
+
+        /* Skills */
+        .skills { display:flex; flex-wrap:wrap; gap:20px; justify-content:center; }
+        .skill { width:200px; }
+        .skill-name { margin-bottom:5px; font-weight:bold; }
+        .skill-bar { background:#ddd; border-radius:5px; overflow:hidden; height:15px; }
+        .skill-bar-inner { height:100%; background:#4CAF50; width:0%; text-align:right; padding-right:5px; color:#fff; font-size:0.8rem; line-height:15px; }
+
+        /* Projects */
+        .projects .project-item { margin-bottom:20px; padding:15px; border:1px solid #ddd; border-radius:8px; transition:all 0.3s ease; }
+        .projects .project-item:hover { box-shadow:0 4px 12px rgba(0,0,0,0.2); }
+        .project-item h3 { margin-bottom:10px; }
+        .project-item p { color:#555; }
+        .project-item a { color:#4CAF50; text-decoration:none; }
+        .project-item a:hover { text-decoration:underline; }
+
+        /* Contact */
+        .contact p, .contact a { text-align:center; margin-bottom:10px; font-size:1.1rem; color:#333; }
+        .contact a { color:#4CAF50; }
+        .contact a:hover { text-decoration:underline; }
+
+        /* Footer */
+        footer { background:#333; color:#fff; text-align:center; padding:20px; margin-top:50px; }
+        footer a { color:#4CAF50; text-decoration:none; }
+        footer a:hover { text-decoration:underline; }
+
+        @media (max-width:768px) {
+            .skills { flex-direction:column; align-items:center; }
+            nav a { display:block; margin:10px 0; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <img src="your-photo.jpg" alt="Vignesh Sundaramahalingam">
+        <h1>Vignesh Sundaramahalingam</h1>
+        <p>Cloud & DevOps Enthusiast | Web Developer | Automation Engineer</p>
+        <nav>
+            <a href="#about">About</a>
+            <a href="#education">Education</a>
+            <a href="#experience">Experience</a>
+            <a href="#skills">Skills</a>
+            <a href="#projects">Projects</a>
+            <a href="#contact">Contact</a>
+        </nav>
+    </header>
+
+    <!-- About -->
+    <section id="about">
+        <h2>About Me</h2>
+        <p>Hello! I'm Vignesh, a passionate developer and cloud enthusiast. I enjoy building projects using AWS, Ansible, and modern web technologies. My goal is to create reliable, scalable, and user-friendly solutions while continuously learning and growing in DevOps and automation.</p>
+    </section>
+
+    <!-- Education -->
+    <section id="education">
+        <h2>Education</h2>
+        <div class="timeline">
+            <div class="timeline-item">
+                <h3>Bachelor of Engineering - Computer Science</h3>
+                <span>University Name, 2017 - 2021</span>
+            </div>
+            <div class="timeline-item">
+                <h3>High School Diploma</h3>
+                <span>School Name, 2015 - 2017</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Experience -->
+    <section id="experience">
+        <h2>Experience</h2>
+        <div class="timeline">
+            <div class="timeline-item">
+                <h3>DevOps Intern - Company Name</h3>
+                <span>Jan 2023 - Present</span>
+                <p>Automated deployment pipelines using Ansible and AWS EC2, implemented monitoring and logging, and assisted in cloud infrastructure management.</p>
+            </div>
+            <div class="timeline-item">
+                <h3>Web Developer - Freelance</h3>
+                <span>Jun 2021 - Dec 2022</span>
+                <p>Developed responsive websites using HTML, CSS, JavaScript, and hosted static sites on AWS S3 and GitHub Pages.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Skills -->
+    <section id="skills">
+        <h2>Skills</h2>
+        <div class="skills">
+            <div class="skill">
+                <div class="skill-name">AWS</div>
+                <div class="skill-bar"><div class="skill-bar-inner" style="width:85%;">85%</div></div>
+            </div>
+            <div class="skill">
+                <div class="skill-name">Ansible</div>
+                <div class="skill-bar"><div class="skill-bar-inner" style="width:80%;">80%</div></div>
+            </div>
+            <div class="skill">
+                <div class="skill-name">Python</div>
+                <div class="skill-bar"><div class="skill-bar-inner" style="width:75%;">75%</div></div>
+            </div>
+            <div class="skill">
+                <div class="skill-name">HTML/CSS/JS</div>
+                <div class="skill-bar"><div class="skill-bar-inner" style="width:90%;">90%</div></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects -->
+    <section id="projects" class="projects">
+        <h2>Projects</h2>
+        <div class="project-item">
+            <h3>Personal Portfolio Website</h3>
+            <p>A professional static portfolio website hosted on AWS S3 showcasing my skills, education, experience, and projects.</p>
+            <a href="https://your-portfolio-link.com" target="_blank">View Project</a>
+        </div>
+        <div class="project-item">
+            <h3>Ansible Automation on AWS</h3>
+            <p>Automated infrastructure provisioning and configuration management on AWS EC2 using dynamic inventory and Ansible playbooks.</p>
+            <a href="https://github.com/vignesh/ansible-project" target="_blank">View Project</a>
+        </div>
+    </section>
+
+    <!-- Contact -->
+    <section id="contact" class="contact">
+        <h2>Contact Me</h2>
+        <p>Email: <a href="mailto:vignesh@example.com">vignesh@example.com</a></p>
+        <p>LinkedIn: <a href="https://www.linkedin.com/in/vignesh-sundaramahalingam" target="_blank">linkedin.com/in/vignesh-sundaramahalingam</a></p>
+        <p>GitHub: <a href="https://github.com/vignesh" target="_blank">github.com/vignesh</a></p>
+    </section>
+
+    <footer>
+        <p>&copy; 2025 Vignesh Sundaramahalingam | <a href="#about">Back to top</a></p>
+    </footer>
+
+</body>
+</html>

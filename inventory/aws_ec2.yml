@@ -5,11 +5,11 @@ keyed_groups:
   - key: tags.Role    # Group by OS tag
     separator: ""
 hostnames:
-  - name: 'ip-address'
+  - name: 'private-ip-address'
 filters:
   instance-state-name: running
 compose:
-  ansible_host: 'ip-address'
+  ansible_host: 'private-ip-address'
   ansible_user: |
     (
       'ec2-user' if tags.get('OS') == 'amazon-linux' or tags.get('OS') == 'rhel' else 'ubuntu'

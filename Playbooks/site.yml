@@ -5,12 +5,14 @@
   pre_tasks:
 
     - name: Install updates Ubuntu
+      tags: ubuntu, update
       apt:
         upgrade: dist
         update_cache: true
       when: ansible_distribution == "Ubuntu"
 
     - name: Install updates Redhat and amazon linux
+      tags: update, redhat, amazonlinux
       dnf:
         update_only: true
         update_cache: true
@@ -22,6 +24,7 @@
   tasks:
     
     - name: Install apache and PHP in web server (RHEL)
+      tags: web, apache, httpd, php
       dnf:
         name: 
           - httpd
@@ -30,20 +33,21 @@
       when: ansible_distribution == "RedHat"
 
     - name: Start and enable Apache service
+      tags: service, web
       service:
         name: httpd
         state: started
         enabled: yes
 
     - name: Deploy test HTML page
-      copy:
+      tags: web
+      template:
+        src: webserver/templates/index.html
         dest: /var/www/html/index.html
-        content: "<h1>Apache is working on {{ inventory_hostname }}</h1>"
-        owner: apache
-        group: apache
-        mode: '0644'
-  
+      notify: Restart Apache
+   
     - name: Deploy test PHP page
+      tags: web
       copy:
         dest: /var/www/html/info.php
         content: "<?php phpinfo(); ?>"
@@ -52,23 +56,33 @@
         mode: '0644'
   
     - name: Verify Apache is running via HTTP
-      uri:
+      tags: web
+      ansible.builtin.uri:
         url: "http://{{ ansible_host }}/"
         return_content: yes
+        status_code: 200
+        timeout: 30
       register: apache_check
 
     - name: Show verification output
+      tags: web
       debug:
         msg: "{{ apache_check.content | truncate(100) }}"
 
+  handlers:
+    - name: Restart httpd
+      service:
+        name: httpd
+        state: restarted
 
 - hosts: db
   become: true
   tasks:
 
     - name: Install mariadb package (amazon linux)
+      tags: db, mariadb
       yum:
-        name: mariadb-server
+        name: mariadb1011-server
         state: latest
       when: ansible_distribution == "Amazon"
 
