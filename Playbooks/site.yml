@@ -1,136 +1,45 @@
 ---
 
-- hosts: all
+- name: Install updates on ubuntu, Amazon linux and redhat
+  hosts: all
   become: true
   pre_tasks:
 
     - name: Install updates Ubuntu
       tags: ubuntu, update
-      apt:
+      ansible.builtin.apt:
         upgrade: dist
         update_cache: true
       when: ansible_distribution == "Ubuntu"
 
     - name: Install updates Redhat and amazon linux
       tags: update, redhat, amazonlinux
-      dnf:
+      ansible.builtin.dnf:
         update_only: true
         update_cache: true
       when: ansible_distribution in ["RedHat", "Amazon"]
 
-- hosts: web
+- name: Install apache on web server
+  hosts: web
   gather_facts: true
   become: true
-  tasks:
-    
-    - name: Install apache and PHP in web server (RHEL)
-      tags: web, apache, httpd, php
-      dnf:
-        name: 
-          - httpd
-          - php
-        state: latest
-      when: ansible_distribution == "RedHat"
+  roles:
+    - web
 
-    - name: Start and enable Apache service
-      tags: service, web
-      service:
-        name: httpd
-        state: started
-        enabled: yes
-
-    - name: Deploy test HTML page
-      tags: web
-      template:
-        src: webserver/templates/index.html
-        dest: /var/www/html/index.html
-      notify: Restart Apache
-   
-    - name: Deploy test PHP page
-      tags: web
-      copy:
-        dest: /var/www/html/info.php
-        content: "<?php phpinfo(); ?>"
-        owner: apache
-        group: apache
-        mode: '0644'
-  
-    - name: Verify Apache is running via HTTP
-      tags: web
-      ansible.builtin.uri:
-        url: "http://{{ ansible_host }}/"
-        return_content: yes
-        status_code: 200
-        timeout: 30
-      register: apache_check
-
-    - name: Show verification output
-      tags: web
-      debug:
-        msg: "{{ apache_check.content | truncate(100) }}"
-
-  handlers:
-    - name: Restart httpd
-      service:
-        name: httpd
-        state: restarted
-
-- hosts: db
+- name: Install maria db on amazon linux
+  hosts: db
   become: true
-  tasks:
+  roles:
+    - db
 
-    - name: Install mariadb package (amazon linux)
-      tags: db, mariadb
-      yum:
-        name: mariadb1011-server
-        state: latest
-      when: ansible_distribution == "Amazon"
-
-    - name: Start and enable MariaDB service
-      service:
-        name: mariadb
-        state: started
-        enabled: yes
-
-- hosts: control
+- name: Install unzip and terraform on control node
+  hosts: control
   become: true
-  tasks: 
-    
-    - name : install unzip
-      package:
-        name: unzip
-        state: latest
+  roles:
+    - control
 
-    - name: install terraform
-      unarchive:
-        src: https://releases.hashicorp.com/terraform/1.13.1/terraform_1.13.1_linux_amd64.zip
-        dest: /usr/local/bin
-        owner: root
-        group: root
-        mode: 0755
-        remote_src: yes
-
-- hosts: all
+- name: Create a user, add ssh key and sudoer file
+  hosts: all
   become: true
-  tasks:
-
-    - name: create user sundari
-      tags: always
-      user:
-        name: sundari
-        groups: root
-
-    - name: Add ssh key for sundari
-      tags: always
-      authorized_key:
-        user: sundari
-        key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICMQ0GcqG6SyVFfCEl6A+Ffug5GfVIiO/JC9/mhfR91S ansibleaws"
-
-    - name: Add sudoers file for sundari
-      tags: always
-      copy:
-        src: sudoer_sundari
-        dest: /etc/sudoers.d/sundari
-        owner: root
-        group: root
-        mode: 0440
+  roles:
+    - base

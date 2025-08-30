@@ -1,0 +1,47 @@
+- name: Install apache and PHP in web server (RHEL)
+  tags: web, apache, httpd, php
+  ansible.builtin.dnf:
+      name:
+        - httpd
+        - php
+      state: latest
+  when: ansible_distribution == "RedHat"
+
+- name: Start and enable Apache service
+  tags: service, web
+  ansible.builtin.service:
+      name: httpd
+      state: started
+      enabled: true
+  when: ansible_distribution == "RedHat"
+
+- name: Deploy test HTML page
+  tags: web
+  ansible.builtin.template:
+      src: index.html.j2
+      dest: /var/www/html/index.html
+      mode: '644'
+  notify: Restart Apache
+
+- name: Deploy test PHP page
+  tags: web
+  ansible.builtin.copy:
+      dest: /var/www/html/info.php
+      content: "<?php phpinfo(); ?>"
+      owner: apache
+      group: apache
+      mode: '644'
+
+- name: Verify Apache is running via HTTP
+  tags: web
+  ansible.builtin.uri:
+      url: "http://{{ ansible_host }}/"
+      return_content: true
+      status_code: 200
+      timeout: 30
+  register: apache_check
+
+- name: Show verification output
+  tags: web
+  ansible.builtin.debug:
+      msg: "{{ apache_check.content | truncate(100) }}"
