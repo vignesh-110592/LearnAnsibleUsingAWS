@@ -2,15 +2,15 @@
   tags: web, apache, httpd, php
   ansible.builtin.dnf:
       name:
-        - httpd
-        - php
+        - "{{ apache_package_name }}"
+        - "{{ php_package_name }}"
       state: latest
   when: ansible_distribution == "RedHat"
 
 - name: Start and enable Apache service
   tags: service, web
   ansible.builtin.service:
-      name: httpd
+      name: "{{ apache_service_name }}"
       state: started
       enabled: true
   when: ansible_distribution == "RedHat"

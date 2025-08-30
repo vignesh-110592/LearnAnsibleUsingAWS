@@ -1,12 +1,12 @@
 - name: Install mariadb package (amazon linux)
   tags: db, mariadb
   ansible.builtin.yum:
-        name: mariadb1011-server
+        name: "{{ mariadb_package_version }}"
         state: latest
   when: ansible_distribution == "Amazon"
 
 - name: Start and enable MariaDB service
   ansible.builtin.service:
-        name: mariadb
+        name: "{{ mariadb_service_name }}"
         state: started
         enabled: true

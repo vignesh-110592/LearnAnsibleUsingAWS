@@ -1,0 +1,5 @@
+---
+ansible_user: ec2-user
+mariadb_package_version: mariadb1011-server
+mariadb_service_name: mariadb
+user_name: sundari

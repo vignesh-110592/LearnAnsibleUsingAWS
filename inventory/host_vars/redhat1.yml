@@ -1,0 +1,6 @@
+---
+ansible_user: ec2-user
+apache_package_name: httpd
+apache_service_name: httpd
+php_package_name: php
+user_name: sundari

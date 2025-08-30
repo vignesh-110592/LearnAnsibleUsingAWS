@@ -1,13 +1,13 @@
 - name: Create user sundari
   tags: always
   ansible.builtin.user:
-        name: sundari
+        name: "{{ user_name }}"
         groups: root
 
 - name: Add ssh key for sundari
   tags: always
   ansible.posix.authorized_key:
-        user: sundari
+        user: "{{ user_name }}"
         key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICMQ0GcqG6SyVFfCEl6A+Ffug5GfVIiO/JC9/mhfR91S ansibleaws"
 
 - name: Add sudoers file for sundari

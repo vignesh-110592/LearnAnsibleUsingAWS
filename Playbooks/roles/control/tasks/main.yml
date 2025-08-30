@@ -1,11 +1,11 @@
 - name: Install unzip
   ansible.builtin.package:
-        name: unzip
+        name: "{{ control_node_package_name }}"
         state: latest
 
 - name: Install terraform
   ansible.builtin.unarchive:
-        src: https://releases.hashicorp.com/terraform/1.13.1/terraform_1.13.1_linux_amd64.zip
+        src: "https://releases.hashicorp.com/terraform/{{ terraform_version }}/terraform_{{ terraform_version }}_{{ terraform_distribution_name }}.zip"
         dest: /usr/local/bin
         owner: root
         group: root

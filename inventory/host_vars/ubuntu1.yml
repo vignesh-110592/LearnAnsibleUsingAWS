@@ -1,0 +1,6 @@
+---
+ansible_user: ubuntu
+control_node_package_name: unzip
+terraform_version: 1.13.1
+terraform_distribution_name: linux_amd64
+user_name: sundari
